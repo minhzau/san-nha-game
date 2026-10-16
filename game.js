@@ -13,7 +13,23 @@ function tree(x,z,scale=1){const g=new T.Group();g.position.set(x,0,z);g.scale.s
 const plants=[];for(const [x,z]of [[-6,-3],[-6,2],[-6,7],[8,-3],[8,3],[8,8]]){cyl(.5,.36,.7,mats.pot,x,.35,z);for(let i=0;i<5;i++)ball(.4,i%2?'#6f964d':'#83aa58',x+Math.sin(i*2)*.25,.95+Math.cos(i)*.1,z+Math.cos(i*2)*.25,scene,[.7,1.1,.7]);plants.push(new T.Vector3(x,0,z))}
 // Bench, mailbox, stones, flowers and a sleeping garden cat.
 box(2.5,.15,.7,mats.wood,7,.7,-1);box(2.5,.7,.1,mats.wood,7,1.1,-1.35);for(const x of [6,8])box(.13,.7,.5,mats.black,x,.35,-1);cyl(.08,.08,1.5,mats.wood,-7,.75,11);box(.7,.5,.7,'#719898',-7,1.6,11);for(let i=0;i<35;i++){const x=-7.5+(i%2)*16;const z=-10+(i*1.63)%20;ball(.11,i%3?'#fff0b0':'#d69b89',x,.35,z);cyl(.025,.025,.3,mats.leaf,x,.15,z)}const cat=new T.Group();cat.position.set(7,.25,6);scene.add(cat);ball(.45,'#d7a16b',0,.15,0,cat,[1.5,.65,.7]);ball(.25,'#d7a16b',.45,.25,0,cat);for(const z of [-.13,.13]){const e=new T.Mesh(new T.ConeGeometry(.11,.23,3),mats.wood);e.position.set(.46,.5,z);cat.add(e)}
-const player=new T.Group();scene.add(player);player.position.set(1,0,8);cyl(.33,.4,.8,mats.blue,0,1.03,0,player);ball(.26,mats.skin,0,1.73,0,player);cyl(.35,.35,.12,'#e8ba5d',0,1.96,0,player);ball(.29,'#e8ba5d',0,2,0,player,[1,.45,1]);const legs=[];for(const x of [-.19,.19]){const l=box(.23,.65,.26,mats.pants,x,.39,0,player);legs.push(l);box(.25,.18,.4,mats.black,x,.1,.08,player)}box(.26,.55,.25,mats.blue,-.42,1.1,.13,player).rotation.x=-.7;box(.25,.5,.25,mats.blue,.42,1.12,.22,player).rotation.x=-1;ball(.13,mats.skin,.4,1,.47,player);const gun=box(.13,.13,.65,mats.black,.31,1,.65,player);box(.24,.23,.2,'#e0ad55',.31,1,.45,player);
+const player=new T.Group();scene.add(player);player.position.set(1,0,8);
+const orange=mat('#ed771f'),orangeDark=mat('#bb5118'),rubber=mat('#273538'),helmet=mat('#ffd13d'),skin=mat('#ffd0a0'),eyes=mat('#201d1b'),silver=mat('#a3b5b8');helmet.roughness=.34;orange.roughness=.65;
+ball(.39,orange,0,1.02,0,player,[1.15,1.22,.88]);cyl(.37,.37,.14,rubber,0,.78,0,player);box(.13,.12,.04,silver,0,.8,.37,player);
+// Large expressive face with cheeks, eyebrows and dark hair under the hard hat.
+ball(.46,skin,0,1.74,.025,player,[1,.98,.92]);for(const x of [-.45,.45])ball(.1,skin,x,1.72,.02,player,[.7,1,.8]);
+ball(.44,'#563d28',0,1.94,-.075,player,[1,.63,.9]);for(const x of [-.19,.19]){ball(.145,'#fff9eb',x,1.8,.395,player,[.85,1.15,.3]);ball(.095,eyes,x,1.79,.437,player,[.87,1.2,.36]);ball(.033,'#ffffff',x-.025,1.83,.47,player);const brow=ball(.11,'#65452b',x,1.98,.38,player,[1,.22,.25]);brow.rotation.z=x>0?-.12:.12;ball(.09,'#f3a687',x*1.5,1.61,.36,player,[1,.5,.2])}
+ball(.075,skin,0,1.65,.465,player,[.8,.8,1]);const smile=new T.Mesh(new T.TorusGeometry(.095,.018,8,18,Math.PI),mat('#9f5840'));smile.rotation.z=Math.PI;smile.position.set(0,1.58,.439);player.add(smile);
+// Yellow safety helmet, wide brim, black goggle strap and raised twin goggles.
+ball(.52,helmet,0,2.07,0,player,[1,.65,.95]);cyl(.56,.56,.055,helmet,0,2.025,.025,player);box(.07,.18,.68,helmet,0,2.32,-.02,player);
+const strap=new T.Mesh(new T.TorusGeometry(.49,.045,8,40),rubber);strap.rotation.x=Math.PI/2;strap.position.set(0,2.12,0);player.add(strap);
+for(const x of [-.21,.21]){const rim=new T.Mesh(new T.TorusGeometry(.17,.045,12,32),rubber);rim.position.set(x,2.19,.37);rim.rotation.x=-.3;player.add(rim);const lens=ball(.145,'#5b707b',x,2.19,.385,player,[1,1,.18]);lens.material.roughness=.17;lens.material.metalness=.55;ball(.055,'#d9f1f5',x-.045,2.23,.414,player,[1,.35,.2])}box(.1,.045,.05,rubber,0,2.19,.4,player);
+const legs=[];for(const x of [-.2,.2]){const leg=new T.Group();leg.position.set(x,.76,0);player.add(leg);legs.push(leg);ball(.17,orange,0,-.2,0,leg,[1,1.5,1]);cyl(.18,.21,.29,rubber,0,-.48,.015,leg);ball(.2,rubber,0,-.61,.11,leg,[1.05,.6,1.45]);box(.27,.035,.34,'#455457',0,-.705,.075,leg)}
+const armL=new T.Group(),armR=new T.Group();armL.position.set(-.43,1.25,0);armR.position.set(.43,1.25,0);player.add(armL,armR);for(const arm of [armL,armR]){ball(.18,orange,0,-.14,.02,arm,[1,1.5,1]);cyl(.15,.15,.09,orangeDark,0,-.35,.035,arm);ball(.16,rubber,0,-.42,.09,arm,[.9,1,1.1])}
+// Blue pressure tank with cap, straps and a pressure gauge.
+const tankBlue=mat('#328ed1');tankBlue.roughness=.3;ball(.35,tankBlue,0,1.11,-.43,player,[1,1.35,.62]);cyl(.13,.13,.11,rubber,0,1.58,-.43,player);for(const x of [-.25,.25]){box(.065,.68,.07,rubber,x,1.15,-.2,player);box(.065,.45,.05,rubber,x,1.13,.31,player)}ball(.09,silver,.29,1.4,-.48,player,[1,1,.3]);ball(.065,'#f3f5e8',.29,1.4,-.51,player,[1,1,.2]);
+// A chunky pressure gun and a long metal lance point toward the wash surface.
+box(.2,.16,.4,rubber,.24,1.03,.52,player);box(.12,.23,.12,rubber,.24,.92,.43,player).rotation.x=-.25;const lance=cyl(.045,.045,.6,silver,.24,1.03,.94,player);lance.rotation.x=Math.PI/2;const gun=cyl(.085,.065,.16,rubber,.24,1.03,1.26,player);gun.rotation.x=Math.PI/2;cyl(.11,.11,.08,helmet,.24,1.03,.72,player).rotation.x=Math.PI/2;
 const groundPlane=new T.Plane(new T.Vector3(0,1,0),-.19),ray=new T.Raycaster(),pointer=new T.Vector2(),target=new T.Vector3(1,.2,3);let pointerValid=false,spraying=false,active=false,paused=false,mode='fan',level=0,time=240,health=5,damageCooldown=0,upgrade=0,money=0,earned=0,done=false;try{const s=JSON.parse(localStorage.getItem('pressure-garden')||'{}');money=s.money||0;upgrade=s.upgrade||0}catch{}const keys={}; let moveGoal=null;let tiles=[],initialDirt=0;
 const dirtGeo=new T.PlaneGeometry(.39,.39);const dirtMats=Array.from({length:7},(_,i)=>mat(['#8c815c','#918660','#958961','#8b805b','#988d66','#8f835f','#414b42'][i]));dirtMats.forEach(m=>m.side=T.DoubleSide);
 function makeLevel(){for(const t of tiles)scene.remove(t.mesh);tiles=[];initialDirt=0;for(let i=0;i<27;i++)for(let j=0;j<34;j++){const x=-4.15+i*.39,z=-4.45+j*.39;const oil=((x-2)**2+(z-1)**2<2.6||(x+2)**2+(z-5)**2<1.2)&&level>0;const noise=(Math.sin(i*72.13+j*39.71)*12345)%1;const dirtyMat=dirtMats[oil?6:0].clone();const dirtTex=soilTexture.clone();dirtTex.repeat.set(1/27,1/34);dirtTex.offset.set(i/27,1-j/34-1/34);dirtTex.needsUpdate=true;dirtyMat.map=dirtTex;dirtyMat.color.set(oil?'#494538':'#ac9c7f');dirtyMat.transparent=true;dirtyMat.depthWrite=false;const mesh=new T.Mesh(dirtGeo,dirtyMat);mesh.rotation.x=-Math.PI/2;mesh.position.set(x,.175,z);mesh.receiveShadow=true;scene.add(mesh);const amount=oil?2:1;tiles.push({mesh,x,z,amount,oil});initialDirt+=amount}time=420-level*25;health=5;earned=0;done=false;resetActivities();player.position.set(1,0,8);$('#jobNumber').textContent=`CÔNG VIỆC 0${level+1} / 03`;$('#jobTitle').textContent=['Một buổi sáng trong sân','Vết dầu sau cơn mưa','Sẵn sàng đón khách'][level]}
@@ -34,16 +50,7 @@ let carClean=0,water=100,walkClock=0,score=0;
 const weeds=[];
 const waterUI=document.createElement('div');waterUI.className='waterHUD';waterUI.innerHTML='◉ NƯỚC TRONG BÌNH<b id="waterValue">100%</b>';document.body.append(waterUI);
 const hint=document.createElement('div');hint.className='hintBubble';document.body.append(hint);
-const version=document.createElement('div');version.className='version';version.textContent='SÂN NHÀ · v4.0';document.body.append(version);
-// Replace the block torso with a rounded work jacket and add face, gloves and pack.
-for(const child of [...player.children]){if(child.geometry?.type==='CylinderGeometry'&&Math.abs(child.position.y-1.03)<.05){player.remove(child)}}
-ball(.43,mats.blue,0,1.12,0,player,[1,1.18,.75]);ball(.22,'#f2c49b',0,1.72,.17,player,[1,.85,.6]);
-for(const x of [-.095,.095])ball(.035,'#293d3a',x,1.78,.3,player);
-ball(.065,'#dba47f',0,1.69,.34,player,[.65,.6,1]);box(.28,.035,.03,'#955e4e',0,1.6,.29,player);
-box(.5,.62,.28,'#d6b55d',0,1.2,-.38,player);for(const x of [-.2,.2])box(.055,.62,.07,'#405b4a',x,1.2,-.18,player);
-ball(.14,'#e4bc63',-.4,.98,.37,player);ball(.14,'#e4bc63',.4,1,.47,player);
-const armL=new T.Group(),armR=new T.Group();player.add(armL,armR);armL.position.set(-.42,1.38,0);armR.position.set(.42,1.38,0);
-box(.2,.42,.22,mats.blue,0,-.18,.12,armL);box(.2,.42,.22,mats.blue,0,-.18,.12,armR);
+const version=document.createElement('div');version.className='version';version.textContent='SÂN NHÀ · v6.0';document.body.append(version);
 // Car body and individually washable mud patches on hood, roof and sides.
 const car=new T.Group();car.position.set(3.8,0,-.3);scene.add(car);
 const paint=mat('#f8fbf6');paint.roughness=.24;paint.metalness=.3;
