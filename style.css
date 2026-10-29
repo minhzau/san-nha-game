@@ -17,3 +17,5 @@ header{top:16px;left:20px;right:20px}.brand{font-size:16px;letter-spacing:1px}.l
 .inHouse .waterHUD{display:none}
 
 .floorHelp{display:none;position:fixed;left:20px;top:90px;padding:15px;background:#fff9e8ed;border-radius:14px;color:#4f6c58;font:12px/1.8 sans-serif;z-index:10}.inHouse .floorHelp{display:block}@media(max-width:600px){.floorHelp{font-size:10px;top:120px;max-width:150px}}
+
+.viewButton{position:fixed;bottom:118px;right:24px;z-index:24;background:#fff8e9ee;color:#395847;border:1px solid #8d9e7c;border-radius:18px;padding:10px 15px;font-size:12px;font-weight:700;cursor:pointer}@media(max-width:650px){.viewButton{bottom:145px;right:14px;padding:8px 10px}}
